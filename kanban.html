@@ -6,90 +6,115 @@
   <title>การบ้านบอร์ด</title>
   <link rel="stylesheet" href="kanban.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-  
 </head>
 <body>
-  <h1>การบ้านบอร์ด</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  <h1>ㅤ</h1>
+  
+  
+
   <div class="board">
     <div class="column" id="backlog">
       <h2>ยังไม่ได้ทำ</h2>
-      <div class="card 1" draggable="true">งาน 1</div>
-      <div class="card 2" draggable="true">งาน 2</div>
-      <div class="card 3" draggable="true">งาน 3</div>
-      <div class="card 4" draggable="true">งาน 5</div>
-      <div class="card 5" draggable="true">งาน 6</div>
-      <div class="card 5" draggable="true">งาน 7</div>
+      <button class="add-button" onclick="addCard('backlog')">เพิ่มงาน</button>
     </div>
     
-    <div class="column">
+    <div class="column" id="inProgress">
       <h2>กำลังจะเริ่มทำ</h2>
+      <button class="add-button" onclick="addCard('inProgress')">เพิ่มงาน</button>
     </div>
-    <div class="column">
+    <div class="column" id="doing">
       <h2>กำลังทำ</h2>
+      <button class="add-button" onclick="addCard('doing')">เพิ่มงาน</button>
     </div>
-    <div class="column">
+    <div class="column" id="waiting">
       <h2>รอตรวจ</h2>
+      <button class="add-button" onclick="addCard('waiting')">เพิ่มงาน</button>
     </div>
-    <div class="column">
+    <div class="column" id="fixing">
       <h2>กำลังแก้</h2>
+      <button class="add-button" onclick="addCard('fixing')">เพิ่มงาน</button>
     </div>
-    <div class="column">
+    <div class="column" id="done">
       <h2>เสร็จ</h2>
+      <button class="add-button" onclick="addCard('done')">เพิ่มงาน</button>
     </div>
   </div>
 
   <script>
     
-    document.querySelectorAll('.column').forEach(column => {
-      new Sortable(column, {
-        group: 'shared', 
-        animation: 150,
+    function initializeSortable() {
+      document.querySelectorAll('.column').forEach(column => {
+        new Sortable(column, {
+          group: 'shared', 
+          animation: 150,
+        });
       });
-    });
+    }
 
-   
-    document.querySelectorAll('.card').forEach(card => {
+ 
+    initializeSortable();
+
+    
+    function makeCardEditable(card) {
       card.addEventListener('click', function() {
-        const content = this.textContent;
+        const content = card.textContent;
         const input = document.createElement('textarea');
         input.value = content;
         input.className = 'editable-text';
-        
-        
+
         input.addEventListener('blur', function() {
           card.textContent = this.value;
-          card.appendChild(input); 
         });
 
-       
         card.innerHTML = '';
         card.appendChild(input);
         input.focus();
       });
-    });
+    }
+
+   
+    function addCard(columnId) {
+      const column = document.getElementById(columnId);
+      const card = document.createElement('div');
+      card.className = 'card ';
+      card.draggable = true;
+      card.innerText = '';
+      
+      makeCardEditable(card); 
+      column.insertBefore(card, column.querySelector('.add-button'));
+
+      
+      initializeSortable();
+    }
+
+  
+    document.querySelectorAll('.card').forEach(makeCardEditable);
   </script>
 
   <style>
-   
     .board {
       display: flex;
       gap: 10px;
-      
-      
     }
 
     .column {
       flex: 1;
       padding: 20px;
       background-color: #ffffff;
-      border-radius: 8px;
+      border-radius: 0px;
       min-width: 150px;
     }
 
     .card {
       margin: 5px 0;
       padding: 10px;
-      background-color: #ce6646;
+      background-color: #ff7d04b6;
       border-radius: 4px;
       cursor: pointer;
     }
@@ -98,7 +123,28 @@
       width: 100%;
       box-sizing: border-box;
     }
-    
+
+    .add-button {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background-color: #00aaff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .card {
+      width: 150px;
+      height: 50px;
+      transition: transform 0.3s ease;
+  }
+
+  .card:hover {
+      transform: scale(1.2);
+  }
   </style>
 </body>
 </html>
+
