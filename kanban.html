@@ -14,9 +14,10 @@
   <h1>ㅤ</h1>
   <h1>ㅤ</h1>
   <h1>ㅤ</h1>
-  <h1>ㅤ</h1>
   
+
   
+
 
   <div class="board">
     <div class="column" id="backlog">
@@ -45,9 +46,9 @@
       <button class="add-button" onclick="addCard('done')">เพิ่มงาน</button>
     </div>
   </div>
-
+  
+  <button class="clear-all-button" onclick="clearAllCards()">Clear All</button>
   <script>
-    
     function initializeSortable() {
       document.querySelectorAll('.column').forEach(column => {
         new Sortable(column, {
@@ -57,10 +58,8 @@
       });
     }
 
- 
     initializeSortable();
 
-    
     function makeCardEditable(card) {
       card.addEventListener('click', function() {
         const content = card.textContent;
@@ -78,23 +77,28 @@
       });
     }
 
-   
     function addCard(columnId) {
       const column = document.getElementById(columnId);
       const card = document.createElement('div');
       card.className = 'card ';
       card.draggable = true;
       card.innerText = '';
-      
+
       makeCardEditable(card); 
       column.insertBefore(card, column.querySelector('.add-button'));
 
-      
       initializeSortable();
     }
 
-  
     document.querySelectorAll('.card').forEach(makeCardEditable);
+
+    
+    function clearAllCards() {
+      document.querySelectorAll('.column').forEach(column => {
+        const cards = column.querySelectorAll('.card');
+        cards.forEach(card => card.remove());
+      });
+    }
   </script>
 
   <style>
@@ -133,18 +137,32 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 0px;
     }
+
     .card {
       width: 150px;
       height: 50px;
       transition: transform 0.3s ease;
-  }
+    }
 
-  .card:hover {
+    .card:hover {
       transform: scale(1.2);
-  }
+    }
+
+    .clear-all-button {
+      display: block;
+      width: 64.2%;
+      padding: 14px;
+      background-color: #ff0000af;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </body>
 </html>
+
 

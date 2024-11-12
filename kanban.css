@@ -42,7 +42,7 @@ body {
 .column h2 {
   text-align: center;
   margin-bottom: 10px;
-  font-size: 16px;
+  font-size: 20px;
 }
 .card{
 transition: transform 0.3s ease;
@@ -51,6 +51,15 @@ transition: transform 0.3s ease;
 .card:hover {
     transform: scale(1.2); 
 }
+
+.clear-all-button{
+  transition: transform 0.3s ease;
+}
+
+.clear-all-button:hover {
+  transform: scale(1.02);
+}
+
 
 
 
