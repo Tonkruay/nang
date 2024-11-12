@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>การบ้านบอร์ด</title>
+  <link rel="stylesheet" href="kanban.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+  
+</head>
+<body>
+  <h1>การบ้านบอร์ด</h1>
+  <div class="board">
+    <div class="column" id="backlog">
+      <h2>ยังไม่ได้ทำ</h2>
+      <div class="card 1" draggable="true">งาน 1</div>
+      <div class="card 2" draggable="true">งาน 2</div>
+      <div class="card 3" draggable="true">งาน 3</div>
+      <div class="card 4" draggable="true">งาน 5</div>
+      <div class="card 5" draggable="true">งาน 6</div>
+      <div class="card 5" draggable="true">งาน 7</div>
+    </div>
+    
+    <div class="column">
+      <h2>กำลังจะเริ่มทำ</h2>
+    </div>
+    <div class="column">
+      <h2>กำลังทำ</h2>
+    </div>
+    <div class="column">
+      <h2>รอตรวจ</h2>
+    </div>
+    <div class="column">
+      <h2>กำลังแก้</h2>
+    </div>
+    <div class="column">
+      <h2>เสร็จ</h2>
+    </div>
+  </div>
+
+  <script>
+    
+    document.querySelectorAll('.column').forEach(column => {
+      new Sortable(column, {
+        group: 'shared', 
+        animation: 150,
+      });
+    });
+
+   
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function() {
+        const content = this.textContent;
+        const input = document.createElement('textarea');
+        input.value = content;
+        input.className = 'editable-text';
+        
+        
+        input.addEventListener('blur', function() {
+          card.textContent = this.value;
+          card.appendChild(input); 
+        });
+
+       
+        card.innerHTML = '';
+        card.appendChild(input);
+        input.focus();
+      });
+    });
+  </script>
+
+  <style>
+   
+    .board {
+      display: flex;
+      gap: 10px;
+      
+      
+    }
+
+    .column {
+      flex: 1;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      min-width: 150px;
+    }
+
+    .card {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #ce6646;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .editable-text {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+  </style>
+</body>
+</html>
